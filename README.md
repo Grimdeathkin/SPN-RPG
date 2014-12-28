@@ -8,9 +8,9 @@ Plugin requirements
   
   ~~-Code exists in another plugin (EdenStarMap)~~
   
-  -Have permissions unlock upon using access blocks
+  ~~-Have permissions unlock upon using access blocks~~
   
-    -How? Check item metadata? Regions?
+    ~~-How? Check item metadata? Regions?~~ (Regions used)
     
 <h5>Handle item  distribution and itemization</h5>
 
