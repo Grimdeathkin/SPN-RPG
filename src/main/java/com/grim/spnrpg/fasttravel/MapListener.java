@@ -1,81 +1,30 @@
 package com.grim.spnrpg.fasttravel;
 
-import com.grim.spnrpg.ConfigHandler;
 import com.grim.spnrpg.Main;
-import org.bukkit.*;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class MapListener implements Listener {
 
-    private HashMap<String, String> cityMaterial = new HashMap<String, String>();
-    private ConfigHandler configHandler = new ConfigHandler("warps.yml");
-    private FileConfiguration config = configHandler.getConfig();
+    private Main plugin;
 
-    public void onRightClick(PlayerInteractEvent event){
-        Action action = event.getAction();
-        if(!(action == Action.RIGHT_CLICK_BLOCK)) return;
-        FileConfiguration config = Main.plugin.getConfig();
-        Material block = event.getClickedBlock().getType();
-        Player player = event.getPlayer();
-        if(block == null) return;
-        Material mat = Material.valueOf(config.getString("mapblock"));
-        if(block == mat){
-            event.setCancelled(true);
-            new MapMenu(player);
-        }
+    public MapListener(Main plugin){
+        this.plugin = plugin;
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event){
+    public void onRightClick(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
+        Player player = event.getPlayer();
         FileConfiguration config = Main.plugin.getConfig();
-        List<String> planets = config.getStringList("cities");
-        Player player = (Player) event.getWhoClicked();
-        Inventory inv = event.getInventory();
-        for(String name : planets){
-            cityMaterial.put(config.getString(name + ".item"), name);
-        }
-        if(inv.getName().equals("Fast Travel")){
-            event.setCancelled(true);
-            String currentItem = event.getCurrentItem().getType().toString();
-            String planet = cityMaterial.get(currentItem);
-            if(cityMaterial.containsKey(currentItem)){
-                event.setCancelled(true);
-                player.closeInventory();
-                if(player.hasPermission("edenstarmap.access." + planet)){
-                    teleportPlayer(planet, player);
-                }else{
-                    player.sendMessage(ChatColor.RED + "You can not go there");
-                }
-            }
-        }
+
+        if(!(block.getType() == Material.valueOf(config.getString("warpblock")))) return;
+        plugin.getWarpMenu().open(player);
     }
 
-    public void teleportPlayer(String planet, Player player){
-        if(player.hasPermission("EdenStarMap.access." + planet)){
-            Location loc = getLocation(planet);
-            player.teleport(loc);
-        }else{
-            player.sendMessage("You can not visit this planet");
-        }
-    }
-
-    public Location getLocation(String planet){
-
-        World world = Bukkit.getServer().getWorld(config.getString(planet + ".world"));
-        double x = config.getDouble(planet + ".x");
-        double y = config.getDouble(planet + ".y");
-        double z = config.getDouble(planet + ".z");
-        return new Location(world, x, y ,z);
-    }
 }

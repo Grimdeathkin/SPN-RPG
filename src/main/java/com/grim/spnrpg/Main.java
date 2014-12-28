@@ -1,5 +1,6 @@
 package com.grim.spnrpg;
 
+import com.grim.spnrpg.fasttravel.WarpMenu;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,6 +19,7 @@ public class Main extends JavaPlugin{
     private static Permission perms = null;
     private FileConfiguration warps = null;
     private File warpsFile = null;
+    private IconMenu warpMenu;
 
     @Override
     public void onDisable() {
@@ -32,7 +34,7 @@ public class Main extends JavaPlugin{
             return;
         }
         setupPermissions();
-        new ConfigHandler();
+        warpMenu = new WarpMenu(plugin).getIconMenu();
     }
 
     private boolean setupEconomy(){
@@ -55,5 +57,9 @@ public class Main extends JavaPlugin{
 
     public Main getInstance(){
         return plugin;
+    }
+
+    public IconMenu getWarpMenu() {
+        return warpMenu;
     }
 }
