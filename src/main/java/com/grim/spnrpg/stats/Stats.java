@@ -6,12 +6,16 @@ public class Stats {
     private int strength;
     private int dexterity;
     private int agility;
+    private int level;
+    private double xp;
 
-    public Stats(int stamina, int strength, int dexterity, int agility) {
+    public Stats(int stamina, int strength, int dexterity, int agility, int level, double xp) {
         this.stamina = stamina;
         this.strength = strength;
         this.dexterity = dexterity;
         this.agility = agility;
+        this.level = level;
+        this.xp = xp;
     }
 
     public void setStamina(int stamina) {
@@ -30,6 +34,18 @@ public class Stats {
         this.agility = agility;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setXp(double xp) {
+        this.xp = xp;
+    }
+
+    public void addXP(double xp){
+        this.xp += xp;
+    }
+
     public int getAgility() {
         return agility;
     }
@@ -46,4 +62,11 @@ public class Stats {
         return dexterity;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public double getXp() {
+        return xp;
+    }
 }

@@ -28,8 +28,7 @@ public class PlayerListener implements Listener {
         if(!configuration.contains("stats")){
             setDefaultStats(configHandler);
         }
-        HashMap<String, Stats> playerStats;
-        playerStats = plugin.getPlayerStats();
+        HashMap<String, Stats> playerStats = plugin.getPlayerStats();
         playerStats.put(player.getUniqueId().toString(), getStats(configuration));
         plugin.setPlayerStats(playerStats);
 
@@ -39,19 +38,26 @@ public class PlayerListener implements Listener {
     public void onDisconnect(PlayerQuitEvent event){
         String uuid = event.getPlayer().getUniqueId().toString();
         FileConfiguration configuration = new ConfigHandler(uuid + ".yml").getConfig();
-        Stats stats = plugin.getPlayerStat(uuid.toString());
+        Stats stats = plugin.getPlayerStat(uuid);
         configuration.set("stats.stamina", stats.getStamina());
         configuration.set("stats.strength", stats.getStrength());
         configuration.set("stats.dexterity", stats.getDexterity());
         configuration.set("stats.agility", stats.getAgility());
+        configuration.set("stats.level", stats.getLevel());
+        configuration.set("stats.xp", stats.getLevel());
+        HashMap<String, Stats> playerStats = plugin.getPlayerStats();
+        playerStats.remove(uuid);
+        plugin.setPlayerStats(playerStats);
     }
 
     private void setDefaultStats(ConfigHandler configurationHandler){
         FileConfiguration configuration = configurationHandler.getConfig();
+        configuration.addDefault("stats.level", 1);
         configuration.addDefault("stats.stamina", 20);
         configuration.addDefault("stats.strength", 1);
         configuration.addDefault("stats.dexterity", 1);
         configuration.addDefault("stats.agility", 1);
+        configuration.addDefault("stats.xp", 0);
         configuration.options().copyDefaults(true);
         configurationHandler.saveConfig();
     }
@@ -61,8 +67,10 @@ public class PlayerListener implements Listener {
         int strength = configuration.getInt("stats.strength");
         int dexterity = configuration.getInt("stats.dexterity");
         int agility = configuration.getInt("stats.agility");
+        int level = configuration.getInt("stats.level");
+        double xp = configuration.getDouble("stats.xp");
 
-        return new Stats(stamina, strength, dexterity, agility);
+        return new Stats(stamina, strength, dexterity, agility, level, xp);
     }
 
 }
