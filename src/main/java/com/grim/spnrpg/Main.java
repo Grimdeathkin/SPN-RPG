@@ -1,10 +1,12 @@
 package com.grim.spnrpg;
 
 import com.grim.spnrpg.fasttravel.WarpMenu;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -57,6 +59,23 @@ public class Main extends JavaPlugin{
 
     public Main getInstance(){
         return plugin;
+    }
+
+    public Economy getEcon() {
+        return econ;
+    }
+
+    public Permission getPerms() {
+        return perms;
+    }
+
+    public WorldGuardPlugin getWorldGuard(){
+        Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
+
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            getServer().getPluginManager().disablePlugin(this);
+        }
+        return (WorldGuardPlugin) plugin;
     }
 
     public IconMenu getWarpMenu() {
