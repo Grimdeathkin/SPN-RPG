@@ -16,14 +16,14 @@ import java.util.List;
 public class MapMenu {
 
     private static Inventory inventory = Bukkit.createInventory(null, 27, "Fast Travel");
-    private ConfigHandler configHandler = new ConfigHandler();
+    private ConfigHandler configHandler = new ConfigHandler("warps.yml");
     private FileConfiguration config;
 
     //Create the map for the player
     public MapMenu(Player player){
         populateMenu(player);
         showMenu(player);
-        config = configHandler.getWarps();
+        config = configHandler.getConfig();
     }
 
     //Populates the warp menu
@@ -31,7 +31,8 @@ public class MapMenu {
         //Create warp config file
         List<String> cities = config.getStringList("cities"); //Get list of defined warp locations
         for(String name : cities){
-            createDisplay(player, "spnrpg.warp.access." + name, Material.valueOf(config.getString(name + ".item")), inventory, config.getInt(name + ".invlocation"), name, "");
+
+            createDisplay(player, "spnrpg.warp.access." + name, Material.valueOf(config.getString(name + ".item")), inventory, config.getInt(name + ".invlocation"), name);
             ItemStack nextPage = new ItemStack(Material.WRITTEN_BOOK, 1);
             ItemMeta im = nextPage.getItemMeta();
             im.setDisplayName(ChatColor.YELLOW + "Shop");
@@ -40,7 +41,9 @@ public class MapMenu {
     }
 
     //Create the items in the inventory
-    private void createDisplay(Player player, String permission, Material material, Inventory inv, int Slot, String name, String lore){
+    private void createDisplay(Player player, String permission, Material material, Inventory inv, int Slot, String name){
+        String lore;
+
         if(player.hasPermission(permission)){
             name = ChatColor.GREEN + name;
             lore = ChatColor.GREEN + "You can go here";

@@ -19,9 +19,8 @@ import java.util.List;
 public class MapListener implements Listener {
 
     private HashMap<String, String> cityMaterial = new HashMap<String, String>();
-    private MapMenu mapMenu;
-    private ConfigHandler configHandler = new ConfigHandler();
-    private FileConfiguration config = configHandler.getWarps();
+    private ConfigHandler configHandler = new ConfigHandler("warps.yml");
+    private FileConfiguration config = configHandler.getConfig();
 
     public void onRightClick(PlayerInteractEvent event){
         Action action = event.getAction();
@@ -33,7 +32,7 @@ public class MapListener implements Listener {
         Material mat = Material.valueOf(config.getString("mapblock"));
         if(block == mat){
             event.setCancelled(true);
-            mapMenu = new MapMenu(player);
+            new MapMenu(player);
         }
     }
 
@@ -42,7 +41,6 @@ public class MapListener implements Listener {
         FileConfiguration config = Main.plugin.getConfig();
         List<String> planets = config.getStringList("cities");
         Player player = (Player) event.getWhoClicked();
-        ItemStack clicked = event.getCurrentItem();
         Inventory inv = event.getInventory();
         for(String name : planets){
             cityMaterial.put(config.getString(name + ".item"), name);
