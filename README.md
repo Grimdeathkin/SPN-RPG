@@ -18,7 +18,7 @@ Plugin requirements
   
   -Algorithm to work out stats distribution from item level
   
-  -Item level dependant on WG region
+  ~~-Item level dependant on WG region~~
   
   -High end predefined gear with particle effects
   
@@ -27,8 +27,6 @@ Plugin requirements
     -Inventory menu to purchase gear
     
   -Custom item stats
-  
-  -Use CustomEnchantments + our own custom effects
   
 <h5>Instance system</h5>
 
