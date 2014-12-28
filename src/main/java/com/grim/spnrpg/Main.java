@@ -1,15 +1,18 @@
 package com.grim.spnrpg;
 
 import com.grim.spnrpg.fasttravel.WarpMenu;
+import com.grim.spnrpg.stats.Stats;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class Main extends JavaPlugin{
 
@@ -19,6 +22,7 @@ public class Main extends JavaPlugin{
     private FileConfiguration warps = null;
     private File warpsFile = null;
     private IconMenu warpMenu;
+    private HashMap<String, Stats> playerStats = new HashMap<String, Stats>();
 
     @Override
     public void onDisable() {
@@ -79,5 +83,21 @@ public class Main extends JavaPlugin{
 
     public IconMenu getWarpMenu() {
         return warpMenu;
+    }
+
+    public Stats getPlayerStat(Player player){
+        return playerStats.get(player.getUniqueId().toString());
+    }
+
+    public Stats getPlayerStat(String uuid){
+        return playerStats.get(uuid);
+    }
+
+    public HashMap<String, Stats> getPlayerStats() {
+        return playerStats;
+    }
+
+    public void setPlayerStats(HashMap<String, Stats> playerStats) {
+        this.playerStats = playerStats;
     }
 }
