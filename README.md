@@ -54,11 +54,11 @@ Plugin requirements
   
     -Strength, Speed, Stamina, etc
     
-  -Leveling system, xp from monsters
+  ~~-Leveling system, xp from monsters~~
   
-  -More xp from harder mobs
+  ~~-More xp from harder mobs~~
   
-  -Use WG regions to get xp?
+  ~~-Use WG regions to get xp?~~
   
   -Gear can modify stats
   
