@@ -4,9 +4,9 @@ Plugin requirements
 <h5>Handle respawns/fast travel</h5>
 
 
-  -Use inventory menu
+  ~~-Use inventory menu~~
   
-  -Code exists in another plugin (EdenStarMap)
+  ~~-Code exists in another plugin (EdenStarMap)~~
   
   -Have permissions unlock upon using access blocks
   
