@@ -10,7 +10,7 @@ Plugin requirements
   
   ~~-Have permissions unlock upon using access blocks~~
   
-    ~~-How? Check item metadata? Regions?~~ (Regions used)
+    -How? Check item metadata? Regions? (Regions used)
     
 <h5>Handle item  distribution and itemization</h5>
 
@@ -66,15 +66,10 @@ Plugin requirements
   
 <h5>Mounting system</h5>
 
-  -Ride horses or speed boost
+  ~~-Ride horses or speed boost~~ (Speed boost)
   
-  -Requires a command with a cooldown
-  
-  -Can’t be used in combat
+  ~~-Can’t be used in combat~~
   
     -Effect is lost when hit
     
-  -Cast time
-  
-    -1.5 seconds?
 
