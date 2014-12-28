@@ -5,14 +5,11 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.InputStreamReader;
-import java.io.Reader;
 
 public class Main extends JavaPlugin{
 
@@ -31,6 +28,8 @@ public class Main extends JavaPlugin{
     @Override
     public void onEnable() {
         plugin = this;
+        new ListenerRegister(plugin);
+        new CommandRegister(plugin);
         if (!setupEconomy() ) {
             getServer().getPluginManager().disablePlugin(this);
             return;
