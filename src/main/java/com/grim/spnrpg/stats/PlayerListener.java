@@ -50,6 +50,12 @@ public class PlayerListener implements Listener {
         plugin.setPlayerStats(playerStats);
     }
 
+
+    @EventHandler
+    public void onXPChange(PlayerXPChangeEvent event){
+        //TODO Calculate xp required to level up
+    }
+
     private void setDefaultStats(ConfigHandler configurationHandler){
         FileConfiguration configuration = configurationHandler.getConfig();
         configuration.addDefault("stats.level", 1);

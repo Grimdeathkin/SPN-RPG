@@ -6,6 +6,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -33,20 +34,23 @@ public class PlayerLevels implements Listener{
         Entity entity = event.getEntity();
         Player player = event.getEntity().getKiller();
         Stats playerStat = plugin.getPlayerStat(player);
-        playerStat.addXP(getXP(entity));
+        Double xp = getXP(entity);
+        playerStat.addXP(xp);
         plugin.getPlayerStats().put(player.getUniqueId().toString(), playerStat);
         configHandler.saveConfig();
+        PlayerXPChangeEvent playerXPChangeEvent = new PlayerXPChangeEvent(player, xp);
+        Bukkit.getServer().getPluginManager().callEvent(playerXPChangeEvent);
     }
 
-    private int getXP(Entity entity){
+    private Double getXP(Entity entity){
         for(ProtectedRegion region : getRegions(entity)){
             //Check if a xp value is assigned to the region
             if(configuration.contains(region.getId())){
-                return configuration.getInt(region.getId());
+                return configuration.getDouble(region.getId());
             }
         }
         //Return 0 if nothing found
-        return 0;
+        return 0D;
     }
 
     private ApplicableRegionSet getRegions(Entity entity){
