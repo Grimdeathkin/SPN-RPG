@@ -1,5 +1,6 @@
 package com.grim.spnrpg.stats;
 
+import com.darkblade12.particleeffect.ParticleEffect;
 import com.grim.spnrpg.ConfigHandler;
 import com.grim.spnrpg.Main;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -7,6 +8,8 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -46,10 +49,14 @@ public class PlayerLevels implements Listener{
 
     @EventHandler
     public void onLevelUp(PlayerLevelupEvent event){
-        /*
-        TODO create stat option menu
-        TODO handle points to spend
-        */
+        Player player = event.getPlayer();
+        plugin.setAttributePoints(player, plugin.getAttributePoints(player) + 3);
+        ParticleEffect.FIREWORKS_SPARK.display(1f, 1f, 1f, 1f, 1, player.getLocation(), 5);
+        player.playSound(player.getLocation(), Sound.ARROW_HIT, 1f, 1f);
+        player.sendMessage(ChatColor.RED + "Congratulations, you  are now level" + (event.getNewLevel() + 1));
+        player.sendMessage(ChatColor.RED + "You have been given 3 attribute points, speed them with /attributes");
+        plugin.setAttributePoints(player, plugin.getAttributePoints(player) + 3);
+        plugin.updatePlayerStats(player, event.getStats());
     }
 
     private Double getXP(Entity entity){

@@ -50,7 +50,7 @@ Plugin requirements
     
 <h5>Skill system</h5>
 
-  -Attributes player level up
+  ~~-Attributes player level up~~
   
     -Strength, Speed, Stamina, etc
     
@@ -60,7 +60,7 @@ Plugin requirements
   
   ~~-Use WG regions to get xp?~~
   
-  -Gear can modify stats
+  ~~-Gear can modify stats~~
   
 <h5>Mounting system</h5>
 

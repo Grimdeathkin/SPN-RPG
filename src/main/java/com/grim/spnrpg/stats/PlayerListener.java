@@ -1,11 +1,8 @@
 package com.grim.spnrpg.stats;
 
-import com.darkblade12.particleeffect.ParticleEffect;
 import com.grim.spnrpg.ConfigHandler;
 import com.grim.spnrpg.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -60,14 +57,8 @@ public class PlayerListener implements Listener {
         Double nextLevel = Math.pow(2, level)*1.5 + 1000 * level;
         if(xp >= nextLevel){
             stats.addLevel(1);
-            ParticleEffect.FIREWORKS_SPARK.display(1f, 1f, 1f, 1f, 1, player.getLocation(), 5);
-            player.playSound(player.getLocation(), Sound.ARROW_HIT, 1f, 1f);
-            player.sendMessage(ChatColor.RED + "Congratulations, you  are now level" + (level + 1));
-            player.sendMessage(ChatColor.RED + "You have been given 3 attribute points, speed them with /attributes");
-            plugin.setAttributePoints(player, plugin.getAttributePoints(player) + 3);
-            plugin.updatePlayerStats(player, stats);
 
-            PlayerLevelupEvent playerLevelupEvent = new PlayerLevelupEvent(player, level + 1);
+            PlayerLevelupEvent playerLevelupEvent = new PlayerLevelupEvent(player, level + 1, stats);
             Bukkit.getServer().getPluginManager().callEvent(playerLevelupEvent);
         }
     }
