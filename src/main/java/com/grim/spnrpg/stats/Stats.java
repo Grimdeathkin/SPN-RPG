@@ -42,6 +42,26 @@ public class Stats {
         this.xp = xp;
     }
 
+    public void addStamina(int stamina) {
+        this.stamina += stamina;
+    }
+
+    public void addStrength(int strength) {
+        this.strength += strength;
+    }
+
+    public void addDexterity(int dexterity) {
+        this.dexterity += dexterity;
+    }
+
+    public void addAgility(int agility) {
+        this.agility += agility;
+    }
+
+    public void addLevel(int level) {
+        this.level += level;
+    }
+
     public void addXP(double xp){
         this.xp += xp;
     }

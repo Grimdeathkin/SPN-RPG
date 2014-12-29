@@ -33,13 +33,23 @@ public class PlayerLevels implements Listener{
         if(event.getEntity().getKiller() == null) return;
         Entity entity = event.getEntity();
         Player player = event.getEntity().getKiller();
+
         Stats playerStat = plugin.getPlayerStat(player);
         Double xp = getXP(entity);
         playerStat.addXP(xp);
-        plugin.getPlayerStats().put(player.getUniqueId().toString(), playerStat);
-        configHandler.saveConfig();
+        plugin.updatePlayerStats(player, playerStat);
+
+        //Call custom XP change event
         PlayerXPChangeEvent playerXPChangeEvent = new PlayerXPChangeEvent(player, xp);
         Bukkit.getServer().getPluginManager().callEvent(playerXPChangeEvent);
+    }
+
+    @EventHandler
+    public void onLevelUp(PlayerLevelupEvent event){
+        /*
+        TODO create stat option menu
+        TODO handle points to spend
+        */
     }
 
     private Double getXP(Entity entity){

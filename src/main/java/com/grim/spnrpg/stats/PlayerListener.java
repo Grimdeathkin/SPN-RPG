@@ -9,8 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.HashMap;
-
 public class PlayerListener implements Listener {
 
     private Main plugin;
@@ -28,16 +26,15 @@ public class PlayerListener implements Listener {
         if(!configuration.contains("stats")){
             setDefaultStats(configHandler);
         }
-        HashMap<String, Stats> playerStats = plugin.getPlayerStats();
-        playerStats.put(player.getUniqueId().toString(), getStats(configuration));
-        plugin.setPlayerStats(playerStats);
+        plugin.updatePlayerStats(player, getStats(configuration));
 
     }
 
     @EventHandler
     public void onDisconnect(PlayerQuitEvent event){
         String uuid = event.getPlayer().getUniqueId().toString();
-        FileConfiguration configuration = new ConfigHandler(uuid + ".yml").getConfig();
+        ConfigHandler configHandler = new ConfigHandler(uuid + ".yml");
+        FileConfiguration configuration = configHandler.getConfig();
         Stats stats = plugin.getPlayerStat(uuid);
         configuration.set("stats.stamina", stats.getStamina());
         configuration.set("stats.strength", stats.getStrength());
@@ -45,9 +42,9 @@ public class PlayerListener implements Listener {
         configuration.set("stats.agility", stats.getAgility());
         configuration.set("stats.level", stats.getLevel());
         configuration.set("stats.xp", stats.getLevel());
-        HashMap<String, Stats> playerStats = plugin.getPlayerStats();
-        playerStats.remove(uuid);
-        plugin.setPlayerStats(playerStats);
+        configHandler.saveConfig();
+        plugin.removePlayerStats(event.getPlayer());
+
     }
 
 

@@ -7,11 +7,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.List;
+import java.util.Random;
 
 public class CombatListener implements Listener {
 
@@ -28,7 +30,11 @@ public class CombatListener implements Listener {
         if(damager instanceof Player){
             Player player = (Player) damager;
             int[] stats = getGearStats(getArmourStats(player.getInventory()), getSwordStats(player.getItemInHand()));
-            event.setDamage(event.getDamage() + (stats[1] * 0.5));
+            if(isCrit(stats[3])){
+                event.setDamage((event.getDamage() + (stats[1] * 0.5)) * 1.5);
+            }else{
+                event.setDamage(event.getDamage() + (stats[1] * 0.5));
+            }
         }
         //Set damage for ranged combat
         else if(damager instanceof Arrow){
@@ -36,7 +42,11 @@ public class CombatListener implements Listener {
             if(arrow.getShooter() instanceof Player){
                 Player player = (Player) arrow.getShooter();
                 int[] stats = getGearStats(getArmourStats(player.getInventory()), getSwordStats(player.getItemInHand()));
-                event.setDamage(event.getDamage() + (stats[2] * 0.5));
+                if(isCrit(stats[3])){
+                    event.setDamage((event.getDamage() + (stats[2] * 0.5)) * 1.5);
+                }else{
+                    event.setDamage(event.getDamage() + (stats[2] * 0.5));
+                }
             }
         }
 
@@ -45,6 +55,15 @@ public class CombatListener implements Listener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event){
         Player player = event.getPlayer();
+        int stamina = plugin.getPlayerStat(player).getStamina();
+        int[] stats = getArmourStats(player.getInventory());
+        stamina = stats[0] + stamina;
+        setPlayerHealth(player, stamina);
+    }
+
+    @EventHandler
+    public void onItemEquip(InventoryClickEvent event){
+        Player player = (Player) event.getWhoClicked();
         int stamina = plugin.getPlayerStat(player).getStamina();
         int[] stats = getArmourStats(player.getInventory());
         stamina = stats[0] + stamina;
@@ -94,7 +113,7 @@ public class CombatListener implements Listener {
 
     private int[] getGearStats(int[] armour, int[] weapon){
         int[] stats = {0, 0, 0, 0};
-        for(int i = 0; i == 3; i++){
+        for(int i = 0; i <= 3; i++){
             stats[i] = armour[i] + weapon[i];
         }
         return stats;
@@ -104,5 +123,19 @@ public class CombatListener implements Listener {
         player.setMaxHealth(stamina);
         player.setHealth(stamina);
         player.setHealthScale(20);
+    }
+
+    private boolean isCrit(int agility){
+        int rolls = agility/2;
+        if(rolls == 0){
+            rolls = 1;
+        }
+        Random random = new Random();
+        for(int i = 1; i == rolls; i++){
+            int randomInt = random.nextInt(1000);
+            if(randomInt == 69){
+                return true;
+            }
+        }return false;
     }
 }

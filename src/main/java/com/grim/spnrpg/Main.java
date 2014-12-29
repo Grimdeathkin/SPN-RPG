@@ -11,7 +11,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.util.HashMap;
 
 public class Main extends JavaPlugin{
@@ -19,8 +18,6 @@ public class Main extends JavaPlugin{
     public static Main plugin;
     private static Economy econ = null;
     private static Permission perms = null;
-    private FileConfiguration warps = null;
-    private File warpsFile = null;
     private IconMenu warpMenu;
     private HashMap<String, Stats> playerStats = new HashMap<String, Stats>();
 
@@ -60,10 +57,6 @@ public class Main extends JavaPlugin{
         return perms != null;
     }
 
-    public Main getInstance(){
-        return plugin;
-    }
-
     public Economy getEcon() {
         return econ;
     }
@@ -91,6 +84,34 @@ public class Main extends JavaPlugin{
 
     public Stats getPlayerStat(String uuid){
         return playerStats.get(uuid);
+    }
+
+    public void updatePlayerStats(Player player, Stats stats){
+        ConfigHandler configHandler = new ConfigHandler(player.getUniqueId().toString() + ".yml");
+        FileConfiguration configuration = configHandler.getConfig();
+        configuration.set("stats.stamina", stats.getStamina());
+        configuration.set("stats.strength", stats.getStrength());
+        configuration.set("stats.dexterity", stats.getDexterity());
+        configuration.set("stats.agility", stats.getAgility());
+        configuration.set("stats.level", stats.getLevel());
+        configuration.set("stats.xp", stats.getLevel());
+        configHandler.saveConfig();
+        playerStats.put(player.getUniqueId().toString(), stats);
+
+    }
+
+    public void removePlayerStats(Player player){
+        ConfigHandler configHandler = new ConfigHandler(player.getUniqueId().toString() + ".yml");
+        FileConfiguration configuration = configHandler.getConfig();
+        Stats stats = getPlayerStat(player);
+        configuration.set("stats.stamina", stats.getStamina());
+        configuration.set("stats.strength", stats.getStrength());
+        configuration.set("stats.dexterity", stats.getDexterity());
+        configuration.set("stats.agility", stats.getAgility());
+        configuration.set("stats.level", stats.getLevel());
+        configuration.set("stats.xp", stats.getLevel());
+        configHandler.saveConfig();
+        playerStats.remove(player.getUniqueId().toString());
     }
 
     public HashMap<String, Stats> getPlayerStats() {
