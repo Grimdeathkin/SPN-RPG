@@ -1,6 +1,5 @@
 package com.grim.spnrpg.stats;
 
-import com.grim.spnrpg.ConfigHandler;
 import com.grim.spnrpg.IconMenu;
 import com.grim.spnrpg.Main;
 import org.bukkit.ChatColor;
@@ -8,7 +7,6 @@ import org.bukkit.DyeColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Wool;
 
@@ -43,9 +41,7 @@ public class CommandAttributes implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(command.getName().equalsIgnoreCase("attributes")){
             Player player = (Player) commandSender;
-            int attributePoints = 0;
-            FileConfiguration config = new ConfigHandler(player.getUniqueId().toString() + ".yml").getConfig();
-            attributePoints = config.getInt("attributepoints");
+            int attributePoints = plugin.getAttributePoints(player);
             player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
             attributeMenu.open(player);
         }
@@ -53,26 +49,38 @@ public class CommandAttributes implements CommandExecutor {
     }
 
     private void increaseStam(Player player){
+        int attributePoints = plugin.getAttributePoints(player) - 1;
         Stats stats = plugin.getPlayerStat(player);
         stats.addStamina(1);
         plugin.updatePlayerStats(player, stats);
+        plugin.setAttributePoints(player, attributePoints);
+        player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
     }
 
     private void increaseStr(Player player){
+        int attributePoints = plugin.getAttributePoints(player) - 1;
         Stats stats = plugin.getPlayerStat(player);
         stats.addStrength(1);
         plugin.updatePlayerStats(player, stats);
+        plugin.setAttributePoints(player, attributePoints);
+        player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
     }
 
     private void increaseDex(Player player){
+        int attributePoints = plugin.getAttributePoints(player) - 1;
         Stats stats = plugin.getPlayerStat(player);
         stats.addDexterity(1);
         plugin.updatePlayerStats(player, stats);
+        plugin.setAttributePoints(player, attributePoints);
+        player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
     }
 
     private void increaseAgi(Player player){
+        int attributePoints = plugin.getAttributePoints(player) - 1;
         Stats stats = plugin.getPlayerStat(player);
         stats.addAgility(1);
         plugin.updatePlayerStats(player, stats);
+        plugin.setAttributePoints(player, attributePoints);
+        player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
     }
 }

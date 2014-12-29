@@ -114,6 +114,19 @@ public class Main extends JavaPlugin{
         playerStats.remove(player.getUniqueId().toString());
     }
 
+    public int getAttributePoints(Player player){
+        ConfigHandler configHandler = new ConfigHandler(player.getUniqueId().toString() + ".yml");
+        FileConfiguration configuration = configHandler.getConfig();
+        return configuration.getInt("attributepoints");
+    }
+
+    public void setAttributePoints(Player player, int newValue){
+        ConfigHandler configHandler = new ConfigHandler(player.getUniqueId().toString() + ".yml");
+        FileConfiguration configuration = configHandler.getConfig();
+        configuration.set("attributepoints", newValue);
+        configHandler.saveConfig();
+    }
+
     public HashMap<String, Stats> getPlayerStats() {
         return playerStats;
     }

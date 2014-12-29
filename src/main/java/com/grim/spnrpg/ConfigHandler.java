@@ -21,7 +21,7 @@ public class ConfigHandler {
         configFile = new File(plugin.getDataFolder(), fileName);
     }
 
-    public void reloadWarpConfig() {
+    public void reloadConfig() {
         if (configFile == null) {
             configFile = new File(plugin.getDataFolder(), "customConfig.yml");
         }
@@ -37,7 +37,7 @@ public class ConfigHandler {
 
     public FileConfiguration getConfig() {
         if (config == null) {
-            reloadWarpConfig();
+            reloadConfig();
         }
         return config;
     }
