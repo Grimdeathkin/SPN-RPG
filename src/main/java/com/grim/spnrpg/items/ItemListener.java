@@ -65,5 +65,4 @@ public class ItemListener implements Listener {
         ApplicableRegionSet set = manager.getApplicableRegions(entity.getLocation());
         return set;
     }
-
 }

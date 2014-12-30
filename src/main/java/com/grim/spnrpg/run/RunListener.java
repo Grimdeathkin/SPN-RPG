@@ -10,11 +10,16 @@ public class RunListener implements Listener {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event){
-        if(!(event.getEntity() instanceof Player)) return;
-        Player player = (Player) event.getEntity();
-
-        if(player.hasPotionEffect(PotionEffectType.SPEED)){
-            player.removePotionEffect(PotionEffectType.SPEED);
+        if((event.getEntity() instanceof Player)){
+            Player player = (Player) event.getEntity();
+            if(player.hasPotionEffect(PotionEffectType.SPEED)){
+                player.removePotionEffect(PotionEffectType.SPEED);
+            }
+        }else if(event.getDamager() instanceof Player){
+            Player player = (Player) event.getDamager();
+            if(player.hasPotionEffect(PotionEffectType.SPEED)){
+                player.removePotionEffect(PotionEffectType.SPEED);
+            }
         }
     }
 }
