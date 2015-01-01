@@ -22,13 +22,15 @@ public class CommandRespec implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(command.getName().equalsIgnoreCase("respec")){
             Player player = (Player) sender;
-            if(player.hasPermission("spnrpg.stats.respec")){
-                EconomyResponse economyResponse = economy.withdrawPlayer(player, plugin.getConfig().getDouble("respec multiplier") * plugin.getPlayerStat(player).getLevel());
-                if(economyResponse.transactionSuccess()){
-                    player.sendMessage(ChatColor.RED + "You have reset your stats");
-                }else{
-                    player.sendMessage(ChatColor.RED + "You can not afford that, it costs: ");
-                }                
+            EconomyResponse economyResponse = economy.withdrawPlayer(player, plugin.getConfig().getDouble("respec multiplier") * plugin.getPlayerStat(player).getLevel());
+            if(economyResponse.transactionSuccess()){
+                Stats stats = plugin.getPlayerStat(player);
+                player.sendMessage(ChatColor.RED + "You have reset your stats");
+                stats.setStamina(20).setStrength(1).setAgility(1).setAgility(1);
+                plugin.setAttributePoints(player, stats.getLevel() * 3);
+                plugin.updatePlayerStats(player, stats);
+            }else{
+                player.sendMessage(ChatColor.RED + "You can not afford that, it costs: ");                          
             }
         }
         return false;

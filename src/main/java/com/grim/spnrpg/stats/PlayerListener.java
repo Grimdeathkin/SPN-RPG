@@ -24,12 +24,11 @@ public class PlayerListener implements Listener {
     private SpnRpg plugin;
     private final FileConfiguration configuration;
     private final WorldGuardPlugin wgPlugin;
-    private final ConfigHandler configHandler;
 
     public PlayerListener(SpnRpg plugin){
         this.plugin = plugin;
         this.plugin = plugin;
-        configHandler = new ConfigHandler("xp.yml");
+        ConfigHandler configHandler = new ConfigHandler("xp.yml");
         configuration = configHandler.getConfig();
         wgPlugin = plugin.getWorldGuard();
     }

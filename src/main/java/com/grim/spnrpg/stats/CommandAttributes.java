@@ -2,6 +2,8 @@ package com.grim.spnrpg.stats;
 
 import com.grim.spnrpg.IconMenu;
 import com.grim.spnrpg.SpnRpg;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -19,6 +21,7 @@ public class CommandAttributes implements CommandExecutor {
 
     public CommandAttributes(final SpnRpg plugin){
         this.plugin = plugin;
+        final Economy economy = plugin.getEcon();
         
         attributeMenu = new IconMenu("Attribute selector", 9, new IconMenu.OptionClickEventHandler() {
             @Override
@@ -33,10 +36,19 @@ public class CommandAttributes implements CommandExecutor {
                 }else if(name.equalsIgnoreCase("agility")){
                     increaseAgi(event.getPlayer());
                 }else if(name.equalsIgnoreCase("respect")){
-                    Stats stats = plugin.getPlayerStat(event.getPlayer());
-                    stats.setStamina(20).setStrength(1).setAgility(1).setAgility(1);
-                    plugin.setAttributePoints(event.getPlayer(), stats.getLevel() * 3);
-                    plugin.updatePlayerStats(event.getPlayer(), stats);
+                    if(event.getPlayer().hasPermission("spnrpg.menu.respec")){
+                        Stats stats = plugin.getPlayerStat(event.getPlayer());
+                        EconomyResponse economyResponse = economy.withdrawPlayer(event.getPlayer(), plugin.getConfig()
+                                .getDouble("respec multiplier") * plugin.getPlayerStat(event.getPlayer()).getLevel());
+                        if(economyResponse.transactionSuccess()){
+                            event.getPlayer().sendMessage(ChatColor.RED + "You have reset your stats");
+                            stats.setStamina(20).setStrength(1).setAgility(1).setAgility(1);
+                            plugin.setAttributePoints(event.getPlayer(), stats.getLevel() * 3);
+                            plugin.updatePlayerStats(event.getPlayer(), stats);
+                        }else{
+                            event.getPlayer().sendMessage(ChatColor.RED + "You can not afford that, it costs: ");
+                        }
+                    }
                 }
             }
         }, plugin);
