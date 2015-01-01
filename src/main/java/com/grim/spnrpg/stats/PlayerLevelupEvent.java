@@ -10,11 +10,13 @@ public class PlayerLevelupEvent extends Event{
     private Player player;
     private int newLevel;
     private Stats stats;
+    private int oldLevel;
 
-    public PlayerLevelupEvent(Player player, int newLevel, Stats stats) {
+    public PlayerLevelupEvent(Player player, int newLevel, int oldLevel, Stats stats) {
         this.player = player;
         this.newLevel = newLevel;
         this.stats = stats;
+        this.oldLevel = oldLevel;
     }
 
     public Player getPlayer() {
@@ -23,6 +25,10 @@ public class PlayerLevelupEvent extends Event{
 
     public int getNewLevel() {
         return newLevel;
+    }
+
+    public int getOldLevel() {
+        return oldLevel;
     }
 
     public Stats getStats(){

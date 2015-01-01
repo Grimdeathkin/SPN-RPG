@@ -30,23 +30,11 @@ Plugin requirements
   
 <h5>Instance system</h5>
 
-  -Allow multiple versions of a dungeon to be played at once
-  
-  -Groups of 5 people
-  
-  -Lobby system
-  
-    -Perhaps have several copies made with the plugin assigning groups of players to each version with a queue
+  -Scrapped in favour ofr a pre existing plugin
     
 <h5>Party system</h5>
 
-  -Allow groups of players up to 5 to join a group
-  
-  -Experience shared between players
-  
-  -Party chat
-  
-    -Visible to staff
+  -Scrapped in favour of a pre existing plugin
     
 <h5>Skill system</h5>
 

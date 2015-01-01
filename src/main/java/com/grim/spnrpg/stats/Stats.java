@@ -18,28 +18,34 @@ public class Stats {
         this.xp = xp;
     }
 
-    public void setStamina(int stamina) {
+    public Stats setStamina(int stamina) {
         this.stamina = stamina;
+        return this;
     }
 
-    public void setStrength(int strength) {
+    public Stats setStrength(int strength) {
         this.strength = strength;
+        return this;
     }
 
-    public void setDexterity(int dexterity) {
+    public Stats setDexterity(int dexterity) {
         this.dexterity = dexterity;
+        return this;
     }
 
-    public void setAgility(int agility) {
+    public Stats setAgility(int agility) {
         this.agility = agility;
+        return this;
     }
 
-    public void setLevel(int level) {
+    public Stats setLevel(int level) {
         this.level = level;
+        return this;
     }
 
-    public void setXp(double xp) {
+    public Stats setXp(double xp) {
         this.xp = xp;
+        return this;
     }
 
     public void addStamina(int stamina) {

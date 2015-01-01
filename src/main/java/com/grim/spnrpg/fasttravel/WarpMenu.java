@@ -3,6 +3,8 @@ package com.grim.spnrpg.fasttravel;
 import com.grim.spnrpg.ConfigHandler;
 import com.grim.spnrpg.IconMenu;
 import com.grim.spnrpg.Main;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -14,35 +16,42 @@ public class WarpMenu {
 
     private final Main plugin;
     private IconMenu iconMenu;
-
+    private FileConfiguration warpList;
+    private Economy economy;
+    
     public WarpMenu(Main plugin){
         this.plugin = plugin;
-
+        warpList = new ConfigHandler("warps.yml").getConfig();
+        economy = plugin.getEcon();
         initWarpMenu();
     }
 
-    public void initWarpMenu(){
+    private void initWarpMenu(){
         FileConfiguration config = Main.plugin.getConfig();
 
         iconMenu = new IconMenu(config.getString("warp.name"), config.getInt("warp.size"), new IconMenu.OptionClickEventHandler() {
             @Override
             public void onOptionClick(IconMenu.OptionClickEvent event) {
-                warpPlayer(event.getPlayer(), event.getName());
+                EconomyResponse economyResponse = economy.withdrawPlayer(event.getPlayer(), warpList.getDouble(event.getName() + ".cost"));
+                if(economyResponse.transactionSuccess()){
+                    warpPlayer(event.getPlayer(), event.getName());
+                }else{
+                    event.getPlayer().sendMessage(ChatColor.RED + "You can not afford that");
+                }
             }
         }, plugin);
         setOptions(iconMenu);
     }
 
-    public void warpPlayer(Player player, String name){
-        FileConfiguration warpList = new ConfigHandler("warps.yml").getConfig();
+    private void warpPlayer(Player player, String name){
         if(player.hasPermission("spnrpg.fasttravel." + name)) {
-            player.teleport(getLocation(warpList, name));
+            player.teleport(getLocation(name));
         }else{
             player.sendMessage(ChatColor.RED + "You can not fast travel there");
         }
     }
 
-    public Location getLocation(FileConfiguration warpList, String name){
+    private Location getLocation(String name){
         double x = warpList.getDouble(name + ".x");
         double y = warpList.getDouble(name + ".y");
         double z = warpList.getDouble(name + ".z");
@@ -51,8 +60,7 @@ public class WarpMenu {
         return new Location(world, x, y, z);
     }
 
-    public void setOptions(IconMenu iconMenu){
-        FileConfiguration warpList = new ConfigHandler("warps.yml").getConfig();
+    private void setOptions(IconMenu iconMenu){
         List<String> warps = warpList.getStringList("warps");
         for(String warp : warps){
             int i = 0;
