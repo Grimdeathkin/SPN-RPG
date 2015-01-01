@@ -14,3 +14,6 @@ commands:
     setstats:
         usage: /setstats <player> <stat> <level> Possible stats: stamina, strength, dexterity, agility, xp, level
         permission: spnrpg.command.setstats
+    spawngear:
+        permission: spnrpg.command.spawngear
+        aliases: spawnitem
