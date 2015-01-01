@@ -97,7 +97,7 @@ public class RandomItemGenerator {
                 stats[3] += 1;
             }
         }
-        if(stats[0] != 0){
+        if(stats[0] != 0 && itemStack.getType() != Material.STONE_SWORD && itemStack.getType() != Material.IRON_SWORD && itemStack.getType() != Material.BOW){ //No stam on weapons
             itemBuilder.lore("Stamina: " + stats[0]);
         }else if(stats[1] != 0){
             itemBuilder.lore("Strength: " + stats[1]);
