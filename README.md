@@ -16,7 +16,7 @@ Plugin requirements
 
   -Random chance of items dropping from mobs
   
-  -Algorithm to work out stats distribution from item level
+  ~~-Algorithm to work out stats distribution from item level~~
   
   ~~-Item level dependant on WG region~~
   
@@ -26,7 +26,7 @@ Plugin requirements
   
     -Inventory menu to purchase gear
     
-  -Custom item stats
+  ~~-Custom item stats~~
   
 <h5>Instance system</h5>
 
