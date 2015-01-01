@@ -3,6 +3,7 @@ package com.grim.spnrpg.stats;
 import com.grim.spnrpg.SpnRpg;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,9 +25,9 @@ public class CommandRespec implements CommandExecutor{
             if(player.hasPermission("spnrpg.stats.respec")){
                 EconomyResponse economyResponse = economy.withdrawPlayer(player, plugin.getConfig().getDouble("respec multiplier") * plugin.getPlayerStat(player).getLevel());
                 if(economyResponse.transactionSuccess()){
-                                        
+                    player.sendMessage(ChatColor.RED + "You have reset your stats");
                 }else{
-                    player.sendMessage("You can not afford that, it costs: ");
+                    player.sendMessage(ChatColor.RED + "You can not afford that, it costs: ");
                 }                
             }
         }
