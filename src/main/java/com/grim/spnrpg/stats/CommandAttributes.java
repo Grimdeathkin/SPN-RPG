@@ -1,7 +1,7 @@
 package com.grim.spnrpg.stats;
 
 import com.grim.spnrpg.IconMenu;
-import com.grim.spnrpg.Main;
+import com.grim.spnrpg.SpnRpg;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -14,10 +14,10 @@ import org.bukkit.material.Wool;
 
 public class CommandAttributes implements CommandExecutor {
 
-    private Main plugin;
+    private SpnRpg plugin;
     private static IconMenu attributeMenu;
 
-    public CommandAttributes(final Main plugin){
+    public CommandAttributes(final SpnRpg plugin){
         this.plugin = plugin;
         
         attributeMenu = new IconMenu("Attribute selector", 9, new IconMenu.OptionClickEventHandler() {

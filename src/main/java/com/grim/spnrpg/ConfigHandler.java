@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 public class ConfigHandler {
     private final String fileName;
-    private final Main plugin = Main.plugin;
+    private final SpnRpg plugin = SpnRpg.plugin;
 
     private FileConfiguration config = null;
     private File configFile = null;

@@ -1,6 +1,6 @@
 package com.grim.spnrpg.fasttravel;
 
-import com.grim.spnrpg.Main;
+import com.grim.spnrpg.SpnRpg;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -15,10 +15,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class WarpListener implements Listener {
 
-    private Main plugin;
+    private SpnRpg plugin;
     private WorldGuardPlugin wgPlugin;
 
-    public WarpListener(Main plugin){
+    public WarpListener(SpnRpg plugin){
         this.plugin = plugin;
         wgPlugin = plugin.getWorldGuard();
     }
@@ -27,7 +27,7 @@ public class WarpListener implements Listener {
     public void onRightClick(PlayerInteractEvent event) {
         Block block = event.getClickedBlock();
         Player player = event.getPlayer();
-        FileConfiguration config = Main.plugin.getConfig();
+        FileConfiguration config = SpnRpg.plugin.getConfig();
 
         if(!(block.getType() == Material.valueOf(config.getString("warpblock")))) return;
         String name = getCityRegion(player);

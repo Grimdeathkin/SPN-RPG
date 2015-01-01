@@ -2,7 +2,7 @@ package com.grim.spnrpg.stats;
 
 import com.darkblade12.particleeffect.ParticleEffect;
 import com.grim.spnrpg.ConfigHandler;
-import com.grim.spnrpg.Main;
+import com.grim.spnrpg.SpnRpg;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -21,12 +21,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener {
 
-    private Main plugin;
+    private SpnRpg plugin;
     private final FileConfiguration configuration;
     private final WorldGuardPlugin wgPlugin;
     private final ConfigHandler configHandler;
 
-    public PlayerListener(Main plugin){
+    public PlayerListener(SpnRpg plugin){
         this.plugin = plugin;
         this.plugin = plugin;
         configHandler = new ConfigHandler("xp.yml");

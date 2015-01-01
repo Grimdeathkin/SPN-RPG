@@ -1,6 +1,6 @@
 package com.grim.spnrpg.stats;
 
-import com.grim.spnrpg.Main;
+import com.grim.spnrpg.SpnRpg;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -17,9 +17,9 @@ import java.util.Random;
 
 public class CombatListener implements Listener {
 
-    private Main plugin;
+    private SpnRpg plugin;
 
-    public CombatListener(Main plugin) {
+    public CombatListener(SpnRpg plugin) {
         this.plugin = plugin;
     }
 

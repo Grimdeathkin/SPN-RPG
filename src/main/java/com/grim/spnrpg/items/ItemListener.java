@@ -1,7 +1,7 @@
 package com.grim.spnrpg.items;
 
 import com.grim.spnrpg.ConfigHandler;
-import com.grim.spnrpg.Main;
+import com.grim.spnrpg.SpnRpg;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -19,10 +19,10 @@ import java.util.List;
 
 public class ItemListener implements Listener {
 
-    private final Main plugin;
+    private final SpnRpg plugin;
     private final WorldGuardPlugin wgPlugin;
 
-    public ItemListener(Main plugin){
+    public ItemListener(SpnRpg plugin){
         this.plugin = plugin;
         wgPlugin = plugin.getWorldGuard();
     }

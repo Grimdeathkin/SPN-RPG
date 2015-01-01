@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class ItemBuilder implements Listener {
 
-    private static final Plugin plugin	= Main.plugin;
+    private static final Plugin plugin	= SpnRpg.plugin;
     private static boolean listener	= false;
     private static final HashMap<String, PotionEffect> effects	= new HashMap<String, PotionEffect>();
 

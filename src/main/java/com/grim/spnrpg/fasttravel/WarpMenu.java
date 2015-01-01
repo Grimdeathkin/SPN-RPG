@@ -2,7 +2,7 @@ package com.grim.spnrpg.fasttravel;
 
 import com.grim.spnrpg.ConfigHandler;
 import com.grim.spnrpg.IconMenu;
-import com.grim.spnrpg.Main;
+import com.grim.spnrpg.SpnRpg;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.*;
@@ -14,12 +14,12 @@ import java.util.List;
 
 public class WarpMenu {
 
-    private final Main plugin;
+    private final SpnRpg plugin;
     private IconMenu iconMenu;
     private FileConfiguration warpList;
     private Economy economy;
     
-    public WarpMenu(Main plugin){
+    public WarpMenu(SpnRpg plugin){
         this.plugin = plugin;
         warpList = new ConfigHandler("warps.yml").getConfig();
         economy = plugin.getEcon();
@@ -27,7 +27,7 @@ public class WarpMenu {
     }
 
     private void initWarpMenu(){
-        FileConfiguration config = Main.plugin.getConfig();
+        FileConfiguration config = SpnRpg.plugin.getConfig();
 
         iconMenu = new IconMenu(config.getString("warp.name"), config.getInt("warp.size"), new IconMenu.OptionClickEventHandler() {
             @Override

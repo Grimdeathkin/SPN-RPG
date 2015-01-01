@@ -7,7 +7,7 @@ import com.grim.spnrpg.stats.CommandSetStats;
 
 public class CommandRegister {
 
-    public CommandRegister(Main plugin){
+    public CommandRegister(SpnRpg plugin){
         plugin.getCommand("run").setExecutor(new CommandRun());
         plugin.getCommand("attribute").setExecutor(new CommandAttributes(plugin));
         plugin.getCommand("respec").setExecutor(new CommandRespec(plugin));

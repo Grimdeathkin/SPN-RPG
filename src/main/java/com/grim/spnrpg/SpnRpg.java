@@ -13,9 +13,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
-public class Main extends JavaPlugin{
+public class SpnRpg extends JavaPlugin{
 
-    public static Main plugin;
+    public static SpnRpg plugin;
     private static Economy econ = null;
     private static Permission perms = null;
     private IconMenu warpMenu;

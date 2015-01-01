@@ -1,6 +1,6 @@
 package com.grim.spnrpg.stats;
 
-import com.grim.spnrpg.Main;
+import com.grim.spnrpg.SpnRpg;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.command.Command;
@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 
 public class CommandRespec implements CommandExecutor{
     
-    public Main plugin;
+    public SpnRpg plugin;
     public Economy economy;
     
-    public CommandRespec(Main plugin) {
+    public CommandRespec(SpnRpg plugin) {
         this.plugin = plugin;
         economy = plugin.getEcon();
     }

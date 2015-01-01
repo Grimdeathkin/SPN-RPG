@@ -1,6 +1,6 @@
 package com.grim.spnrpg.stats;
 
-import com.grim.spnrpg.Main;
+import com.grim.spnrpg.SpnRpg;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 
 public class CommandSetStats implements CommandExecutor{
 
-    private Main plugin;
+    private SpnRpg plugin;
     
-    public CommandSetStats(Main plugin){
+    public CommandSetStats(SpnRpg plugin){
         this.plugin = plugin;
             }
     
