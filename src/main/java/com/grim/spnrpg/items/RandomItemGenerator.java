@@ -1,7 +1,6 @@
 package com.grim.spnrpg.items;
 
 import com.grim.spnrpg.ItemBuilder;
-import com.grim.spnrpg.SpnRpg;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -9,17 +8,16 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Random;
 
 public class RandomItemGenerator {
-    private SpnRpg plugin;
     private Random random;
 
-    public RandomItemGenerator(SpnRpg plugin) {
-        this.plugin = plugin;
+    public RandomItemGenerator() {
         this.random = new Random();
     }
 
-    private ItemStack getRandomItem(String type, int itemLevel) {
+    public ItemStack getRandomItem(int itemLevel) {
         int randomNumber = random.nextInt(5);
-        if (type.equalsIgnoreCase("agility")) {
+        int type = random.nextInt(2);
+        if (type == 1) {
             if (itemLevel < 100) {
                 switch (randomNumber) {
                     case 1:
@@ -47,7 +45,7 @@ public class RandomItemGenerator {
                         return setStats(new ItemStack(Material.BOW), itemLevel, type);
                 }
             }
-        } else if (type.equalsIgnoreCase("strength")) {
+        } else if (type == 2) {
             if (itemLevel < 100) {
                 switch (randomNumber) {
                     case 1:
@@ -78,7 +76,7 @@ public class RandomItemGenerator {
         }return null;
     }
     
-    public ItemStack setStats(ItemStack itemStack, int itemLevel, String type){
+    private ItemStack setStats(ItemStack itemStack, int itemLevel, int type){
         ItemBuilder itemBuilder = new ItemBuilder(itemStack);
         int statBudget = (int) (0.5*itemLevel - 2);
         int[] stats = {0, 0, 0, 0}; //Stamina, strength, agility, dexterity
@@ -88,9 +86,9 @@ public class RandomItemGenerator {
             if(randomNumber == 1){
                 stats[0] += 1;
             }else if(randomNumber == 2){
-                if(type.equalsIgnoreCase("strength")){
+                if(type == 2){
                     stats[1] += 1;
-                }else if(type.equalsIgnoreCase("agility")){
+                }else if(type == 1){
                     stats[2] += 1;
                 }                
             }else if(randomNumber == 3){

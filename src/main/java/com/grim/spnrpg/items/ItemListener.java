@@ -13,37 +13,29 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
 
 public class ItemListener implements Listener {
 
-    private final SpnRpg plugin;
     private final WorldGuardPlugin wgPlugin;
 
     public ItemListener(SpnRpg plugin){
-        this.plugin = plugin;
         wgPlugin = plugin.getWorldGuard();
     }
 
     @EventHandler
     public void onMobDeath(EntityDeathEvent event){
         LivingEntity entity = event.getEntity();
-        List<ItemStack> drops = event.getDrops();
         //Check if entity is a player, we don't want to edit players drops
         if(entity instanceof Player) return;
-
-        //We need to remove the usual drops
-        drops.clear();
+        event.getDrops().clear();
         int itemLevel = getItemLevel(entity);
 
         //If the item level isn't defined nothing will drop
         if(itemLevel == 0){
             return;
         }
-
-        //TODO Create item algorithm
+        
+        event.getDrops().add(new RandomItemGenerator().getRandomItem(itemLevel));
     }
 
     //Get the item level stored in the config
@@ -62,7 +54,7 @@ public class ItemListener implements Listener {
     //Get the regions in the entity died in
     private ApplicableRegionSet getRegions(Entity entity){
         RegionManager manager = wgPlugin.getRegionManager(entity.getWorld());
-        ApplicableRegionSet set = manager.getApplicableRegions(entity.getLocation());
-        return set;
+        return manager.getApplicableRegions(entity.getLocation());
+
     }
 }
