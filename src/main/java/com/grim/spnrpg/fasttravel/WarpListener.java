@@ -28,10 +28,11 @@ public class WarpListener implements Listener {
         Block block = event.getClickedBlock();
         Player player = event.getPlayer();
         FileConfiguration config = SpnRpg.plugin.getConfig();
-
-        if(!(block.getType() == Material.valueOf(config.getString("warpblock")))) return;
+        if(block == null) return;
+        if(block.getType() != Material.valueOf(config.getString("warpblock"))) return;
         String name = getCityRegion(player);
-        if(!player.hasPermission("spnrpg.access." + name) && name != null){
+        if(name == null) return;
+        if(!player.hasPermission("spnrpg.access." + name)){
             plugin.getPerms().playerAdd(player, "spnrpg.access." + name);
         }
         plugin.getWarpMenu().open(player);
@@ -41,7 +42,7 @@ public class WarpListener implements Listener {
     public String getCityRegion(Player player){
         RegionManager manager = wgPlugin.getRegionManager(player.getWorld());
         ApplicableRegionSet set = manager.getApplicableRegions(player.getLocation());
-
+        if (set == null) return null;
         for(ProtectedRegion region : set){
             if(region.getId().startsWith("city")){
                 //Returns name of the city

@@ -15,6 +15,7 @@ public class ConfigHandler {
 
     private FileConfiguration config = null;
     private File configFile = null;
+    private String filename;
 
     public ConfigHandler(String fileName){
         this.fileName = fileName;
@@ -23,7 +24,7 @@ public class ConfigHandler {
 
     public void reloadConfig() {
         if (configFile == null) {
-            configFile = new File(plugin.getDataFolder(), "customConfig.yml");
+            configFile = new File(plugin.getDataFolder(), fileName);
         }
         config = YamlConfiguration.loadConfiguration(configFile);
 

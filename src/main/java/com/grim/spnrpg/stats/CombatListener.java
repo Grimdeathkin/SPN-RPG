@@ -29,7 +29,7 @@ public class CombatListener implements Listener {
         //Set damage for melee combat
         if(damager instanceof Player){
             Player player = (Player) damager;
-            int[] stats = getGearStats(getArmourStats(player.getInventory()), getSwordStats(player.getItemInHand()));
+            int[] stats = getGearStats(getArmourStats(player.getInventory()), getWeaponStats(player.getItemInHand()));
             if(isCrit(stats[3])){
                 event.setDamage((event.getDamage() + (stats[1] * 0.5)) * 1.5);
             }else{
@@ -41,7 +41,7 @@ public class CombatListener implements Listener {
             Arrow arrow = (Arrow) damager;
             if(arrow.getShooter() instanceof Player){
                 Player player = (Player) arrow.getShooter();
-                int[] stats = getGearStats(getArmourStats(player.getInventory()), getSwordStats(player.getItemInHand()));
+                int[] stats = getGearStats(getArmourStats(player.getInventory()), getWeaponStats(player.getItemInHand()));
                 if(isCrit(stats[3])){
                     event.setDamage((event.getDamage() + (stats[2] * 0.5)) * 1.5);
                 }else{
@@ -73,28 +73,37 @@ public class CombatListener implements Listener {
     private int[] getArmourStats(PlayerInventory inventory){
         int[] stats = {0, 0, 0, 0};
         ItemStack[] armourContents = inventory.getArmorContents();
+        if(armourContents == null) return stats;
         for(ItemStack armour : armourContents){
-            List<String> lore = armour.getItemMeta().getLore();
-            for (String stat : lore){
-                if(stat.contains("Stamina: ")){
-                    stats[0] += Integer.valueOf(stat.replace("Stamina: ", ""));
-                }
-                if(stat.contains("Strength: ")){
-                    stats[1] += Integer.valueOf(stat.replace("Strength: ", ""));
-                }
-                if(stat.contains("Dexterity: ")){
-                    stats[2] += Integer.valueOf(stat.replace("Dexterity: ", ""));
-                }
-                if(stat.contains("Agility: ")){
-                    stats[3] += Integer.valueOf(stat.replace("Agility: ", ""));
+            if(armour != null){
+                if(armour.getItemMeta() == null) return stats;
+                List<String> lore = armour.getItemMeta().getLore();
+                if(!lore.isEmpty()){
+                    for (String stat : lore) {
+                        if (stat.contains("Stamina: ")) {
+                            stats[0] += Integer.valueOf(stat.replace("Stamina: ", ""));
+                        }
+                        if (stat.contains("Strength: ")) {
+                            stats[1] += Integer.valueOf(stat.replace("Strength: ", ""));
+                        }
+                        if (stat.contains("Dexterity: ")) {
+                            stats[2] += Integer.valueOf(stat.replace("Dexterity: ", ""));
+                        }
+                        if (stat.contains("Agility: ")) {
+                            stats[3] += Integer.valueOf(stat.replace("Agility: ", ""));
+                        }
+                    }
                 }
             }
         } return stats;
     }
 
-    private int[] getSwordStats(ItemStack itemStack){
+    private int[] getWeaponStats(ItemStack itemStack){
         int[] stats = {0, 0, 0, 0};
+        if(itemStack == null) return stats;
+        if(itemStack.getItemMeta() == null) return stats;
         List<String> lore = itemStack.getItemMeta().getLore();
+        if(lore == null) return stats;
         for (String stat : lore) {
             if (stat.contains("Stamina: ")) {
                 stats[0] += Integer.valueOf(stat.replace("Stamina: ", ""));

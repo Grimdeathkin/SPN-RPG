@@ -1,0 +1,21 @@
+main: com.grim.spnrpg.SpnRpg
+author: Grim
+version: 1.0
+name: SPN-RPG
+description: SPNs RPG plugin
+depend: [Vault]
+commands:
+  attribute:
+    aliases: [stats, talents]
+    permission: spnrpg.command.attributes
+  run:
+    aliases: mount
+    permission: spnrpg.command.run
+  respec:
+    permission: spnrpg.command.respec
+  setstats:
+    usage: /setstats <player> <stat> <level> Possible stats; stamina, strength, dexterity, agility, xp, level
+    permission: spnrpg.command.setstats
+  spawngear:
+    permission: spnrpg.command.spawngear
+    aliases: spawnitem

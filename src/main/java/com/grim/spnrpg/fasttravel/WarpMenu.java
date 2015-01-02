@@ -62,6 +62,7 @@ public class WarpMenu {
 
     private void setOptions(IconMenu iconMenu){
         List<String> warps = warpList.getStringList("warps");
+        if(warps.isEmpty()) return;
         for(String warp : warps){
             int i = 0;
             ItemStack icon = new ItemStack(Material.valueOf(warpList.getString(warp + ".icon")));

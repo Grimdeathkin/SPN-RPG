@@ -1,6 +1,7 @@
 package com.grim.spnrpg;
 
 import com.grim.spnrpg.fasttravel.WarpMenu;
+import com.grim.spnrpg.items.RandomItemGenerator;
 import com.grim.spnrpg.stats.Stats;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.milkbowl.vault.economy.Economy;
@@ -20,6 +21,7 @@ public class SpnRpg extends JavaPlugin{
     private static Permission perms = null;
     private IconMenu warpMenu;
     private HashMap<String, Stats> playerStats = new HashMap<String, Stats>();
+    private RandomItemGenerator randomItemGenerator = new RandomItemGenerator();
 
     @Override
     public void onDisable() {
@@ -133,5 +135,9 @@ public class SpnRpg extends JavaPlugin{
 
     public void setPlayerStats(HashMap<String, Stats> playerStats) {
         this.playerStats = playerStats;
+    }
+    
+    public RandomItemGenerator getRandomItemGenerator(){
+        return randomItemGenerator;
     }
 }

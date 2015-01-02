@@ -17,9 +17,11 @@ import org.bukkit.event.entity.EntityDeathEvent;
 public class ItemListener implements Listener {
 
     private final WorldGuardPlugin wgPlugin;
+    private SpnRpg plugin;
 
     public ItemListener(SpnRpg plugin){
         wgPlugin = plugin.getWorldGuard();
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -35,7 +37,7 @@ public class ItemListener implements Listener {
             return;
         }
         
-        event.getDrops().add(new RandomItemGenerator().getRandomItem(itemLevel));
+        event.getDrops().add(plugin.getRandomItemGenerator().getRandomItem(itemLevel));
     }
 
     //Get the item level stored in the config

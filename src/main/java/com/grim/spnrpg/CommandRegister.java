@@ -13,6 +13,6 @@ public class CommandRegister {
         plugin.getCommand("attribute").setExecutor(new CommandAttributes(plugin));
         plugin.getCommand("respec").setExecutor(new CommandRespec(plugin));
         plugin.getCommand("setstats").setExecutor(new CommandSetStats(plugin));
-        plugin.getCommand("spawngear").setExecutor(new CommandSpawnGear());
+        plugin.getCommand("spawngear").setExecutor(new CommandSpawnGear(plugin));
     }
 }

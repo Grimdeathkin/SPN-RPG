@@ -1,0 +1,6 @@
+warp:
+    name: Fast Travel
+    size: 9
+stats:
+    respeccost: 100
+warpblock: COMMAND

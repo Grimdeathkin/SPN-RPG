@@ -22,7 +22,7 @@ public class CommandRespec implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(command.getName().equalsIgnoreCase("respec")){
             Player player = (Player) sender;
-            EconomyResponse economyResponse = economy.withdrawPlayer(player, plugin.getConfig().getDouble("respec multiplier") * plugin.getPlayerStat(player).getLevel());
+            EconomyResponse economyResponse = economy.withdrawPlayer(player, plugin.getConfig().getDouble("stats.respeccost") * plugin.getPlayerStat(player).getLevel());
             if(economyResponse.transactionSuccess()){
                 Stats stats = plugin.getPlayerStat(player);
                 player.sendMessage(ChatColor.RED + "You have reset your stats");

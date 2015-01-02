@@ -23,7 +23,7 @@ public class CommandAttributes implements CommandExecutor {
         this.plugin = plugin;
         final Economy economy = plugin.getEcon();
         
-        attributeMenu = new IconMenu("Attribute selector", 9, new IconMenu.OptionClickEventHandler() {
+        attributeMenu = new IconMenu("Attribute selector", 18, new IconMenu.OptionClickEventHandler() {
             @Override
             public void onOptionClick(IconMenu.OptionClickEvent event) {
                 String name = event.getName();
@@ -39,7 +39,7 @@ public class CommandAttributes implements CommandExecutor {
                     if(event.getPlayer().hasPermission("spnrpg.menu.respec")){
                         Stats stats = plugin.getPlayerStat(event.getPlayer());
                         EconomyResponse economyResponse = economy.withdrawPlayer(event.getPlayer(), plugin.getConfig()
-                                .getDouble("respec multiplier") * plugin.getPlayerStat(event.getPlayer()).getLevel());
+                                .getDouble("stats.respeccost"));
                         if(economyResponse.transactionSuccess()){
                             event.getPlayer().sendMessage(ChatColor.RED + "You have reset your stats");
                             stats.setStamina(20).setStrength(1).setAgility(1).setAgility(1);
@@ -60,7 +60,7 @@ public class CommandAttributes implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if(command.getName().equalsIgnoreCase("attributes")){
+        if(command.getName().equalsIgnoreCase("attribute")){
             Player player = (Player) commandSender;
             int attributePoints = plugin.getAttributePoints(player);
             player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
@@ -70,38 +70,54 @@ public class CommandAttributes implements CommandExecutor {
     }
 
     private void increaseStam(Player player){
-        int attributePoints = plugin.getAttributePoints(player) - 1;
+        int attributePoints = plugin.getAttributePoints(player);
+        if(attributePoints == 0) {
+            player.sendMessage(ChatColor.RED + "You have no points to spend");
+            return;
+        }
         Stats stats = plugin.getPlayerStat(player);
         stats.addStamina(1);
         plugin.updatePlayerStats(player, stats);
-        plugin.setAttributePoints(player, attributePoints);
-        player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
+        plugin.setAttributePoints(player, (attributePoints - 1));
+        player.sendMessage(ChatColor.RED + "You have " + (attributePoints - 1) + " points left to spend.");
     }
 
     private void increaseStr(Player player){
-        int attributePoints = plugin.getAttributePoints(player) - 1;
+        int attributePoints = plugin.getAttributePoints(player);
+        if(attributePoints == 0) {
+            player.sendMessage(ChatColor.RED + "You have no points to spend");
+            return;
+        }
         Stats stats = plugin.getPlayerStat(player);
         stats.addStrength(1);
         plugin.updatePlayerStats(player, stats);
-        plugin.setAttributePoints(player, attributePoints);
-        player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
+        plugin.setAttributePoints(player, (attributePoints - 1));
+        player.sendMessage(ChatColor.RED + "You have " + (attributePoints - 1) + " points left to spend.");
     }
 
     private void increaseDex(Player player){
-        int attributePoints = plugin.getAttributePoints(player) - 1;
+        int attributePoints = plugin.getAttributePoints(player);
+        if(attributePoints == 0) {
+            player.sendMessage(ChatColor.RED + "You have no points to spend");
+            return;
+        }
         Stats stats = plugin.getPlayerStat(player);
         stats.addDexterity(1);
         plugin.updatePlayerStats(player, stats);
-        plugin.setAttributePoints(player, attributePoints);
-        player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
+        plugin.setAttributePoints(player, (attributePoints - 1));
+        player.sendMessage(ChatColor.RED + "You have " + (attributePoints - 1) + " points left to spend.");
     }
 
     private void increaseAgi(Player player){
-        int attributePoints = plugin.getAttributePoints(player) - 1;
+        int attributePoints = plugin.getAttributePoints(player);
+        if(attributePoints == 0) {
+            player.sendMessage(ChatColor.RED + "You have no points to spend");
+            return;
+        }
         Stats stats = plugin.getPlayerStat(player);
         stats.addAgility(1);
         plugin.updatePlayerStats(player, stats);
-        plugin.setAttributePoints(player, attributePoints);
-        player.sendMessage(ChatColor.RED + "You have " + attributePoints + " points left to spend.");
+        plugin.setAttributePoints(player, attributePoints - 1);
+        player.sendMessage(ChatColor.RED + "You have " + (attributePoints - 1) + " points left to spend.");
     }
 }

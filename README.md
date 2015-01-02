@@ -14,7 +14,7 @@ Plugin requirements
     
 <h5>Handle item  distribution and itemization</h5>
 
-  -Random chance of items dropping from mobs
+  ~~-Random chance of items dropping from mobs~~
   
   ~~-Algorithm to work out stats distribution from item level~~
   
@@ -58,4 +58,15 @@ Plugin requirements
   
     -Effect is lost when hit
     
-
+<h3>1.1 Version Features</h3>
+  -Holograms displaying xp gained
+  
+  -Premade items purchasable from menu
+   
+  -Particle effects for premade items
+  
+  -Stat scoreboard
+  
+  -Custom names for items
+  
+  

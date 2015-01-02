@@ -49,16 +49,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onDisconnect(PlayerQuitEvent event){
         String uuid = event.getPlayer().getUniqueId().toString();
-        ConfigHandler configHandler = new ConfigHandler(uuid + ".yml");
-        FileConfiguration configuration = configHandler.getConfig();
         Stats stats = plugin.getPlayerStat(uuid);
-        configuration.set("stats.stamina", stats.getStamina());
-        configuration.set("stats.strength", stats.getStrength());
-        configuration.set("stats.dexterity", stats.getDexterity());
-        configuration.set("stats.agility", stats.getAgility());
-        configuration.set("stats.level", stats.getLevel());
-        configuration.set("stats.xp", stats.getLevel());
-        configHandler.saveConfig();
         plugin.removePlayerStats(event.getPlayer());
     }
 
