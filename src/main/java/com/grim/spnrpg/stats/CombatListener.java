@@ -29,7 +29,7 @@ public class CombatListener implements Listener {
         //Set damage for melee combat
         if(damager instanceof Player){
             Player player = (Player) damager;
-            int[] stats = getGearStats(getArmourStats(player.getInventory()), getWeaponStats(player.getItemInHand()));
+            int[] stats = getTotalStats(getArmourStats(player.getInventory(), player), getWeaponStats(player.getItemInHand()), player);
             if(isCrit(stats[3])){
                 event.setDamage((event.getDamage() + (stats[1] * 0.5)) * 1.5);
             }else{
@@ -41,7 +41,7 @@ public class CombatListener implements Listener {
             Arrow arrow = (Arrow) damager;
             if(arrow.getShooter() instanceof Player){
                 Player player = (Player) arrow.getShooter();
-                int[] stats = getGearStats(getArmourStats(player.getInventory()), getWeaponStats(player.getItemInHand()));
+                int[] stats = getTotalStats(getArmourStats(player.getInventory(), player), getWeaponStats(player.getItemInHand()), player);
                 if(isCrit(stats[3])){
                     event.setDamage((event.getDamage() + (stats[2] * 0.5)) * 1.5);
                 }else{
@@ -56,7 +56,7 @@ public class CombatListener implements Listener {
     public void onRespawn(PlayerRespawnEvent event){
         Player player = event.getPlayer();
         int stamina = plugin.getPlayerStat(player).getStamina();
-        int[] stats = getArmourStats(player.getInventory());
+        int[] stats = getArmourStats(player.getInventory(), player);
         stamina = stats[0] + stamina;
         setPlayerHealth(player, stamina);
     }
@@ -65,23 +65,23 @@ public class CombatListener implements Listener {
     public void onItemEquip(InventoryClickEvent event){
         Player player = (Player) event.getWhoClicked();
         int stamina = plugin.getPlayerStat(player).getStamina();
-        int[] stats = getArmourStats(player.getInventory());
+        int[] stats = getArmourStats(player.getInventory(), player);
         stamina = stats[0] + stamina;
         setPlayerHealth(player, stamina);
     }
 
-    private int[] getArmourStats(PlayerInventory inventory){
+    private int[] getArmourStats(PlayerInventory inventory, Player player){
         int[] stats = {0, 0, 0, 0};
         ItemStack[] armourContents = inventory.getArmorContents();
         if(armourContents == null) return stats;
         for(ItemStack armour : armourContents){
-            if(armour != null){
-                if(armour.getItemMeta() == null) return stats;
+            if(armour.getTypeId() != 0){
                 List<String> lore = armour.getItemMeta().getLore();
-                if(!lore.isEmpty()){
+                if(lore != null){
                     for (String stat : lore) {
                         if (stat.contains("Stamina: ")) {
                             stats[0] += Integer.valueOf(stat.replace("Stamina: ", ""));
+                            player.sendMessage("DEBUG:" +  stats[0]);
                         }
                         if (stat.contains("Strength: ")) {
                             stats[1] += Integer.valueOf(stat.replace("Strength: ", ""));
@@ -120,18 +120,20 @@ public class CombatListener implements Listener {
         } return stats;
     }
 
-    private int[] getGearStats(int[] armour, int[] weapon){
+    private int[] getTotalStats(int[] armour, int[] weapon, Player player){
         int[] stats = {0, 0, 0, 0};
+        Stats playerStats = plugin.getPlayerStat(player);
+        int[] playerStat = {playerStats.getStamina(), playerStats.getStrength(), playerStats.getDexterity(), playerStats.getAgility()};
         for(int i = 0; i <= 3; i++){
-            stats[i] = armour[i] + weapon[i];
+            stats[i] = armour[i] + weapon[i] + playerStat[i];
         }
         return stats;
     }
 
     private void setPlayerHealth(Player player, int stamina){
         player.setMaxHealth(stamina);
-        player.setHealth(stamina);
         player.setHealthScale(20);
+        player.sendMessage(player.getHealth() + ", " + player.getHealthScale());
     }
 
     private boolean isCrit(int agility){

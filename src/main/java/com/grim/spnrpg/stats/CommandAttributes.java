@@ -38,7 +38,7 @@ public class CommandAttributes implements CommandExecutor {
                 }else if(name.equalsIgnoreCase("respect")){
                     if(event.getPlayer().hasPermission("spnrpg.menu.respec")){
                         Stats stats = plugin.getPlayerStat(event.getPlayer());
-                        EconomyResponse economyResponse = economy.withdrawPlayer(event.getPlayer(), plugin.getConfig()
+                            EconomyResponse economyResponse = economy.withdrawPlayer(event.getPlayer(), plugin.getConfig()
                                 .getDouble("stats.respeccost"));
                         if(economyResponse.transactionSuccess()){
                             event.getPlayer().sendMessage(ChatColor.RED + "You have reset your stats");

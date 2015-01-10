@@ -16,8 +16,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scoreboard.*;
 
 public class PlayerListener implements Listener {
 
@@ -34,16 +35,15 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onLogin(PlayerLoginEvent event) {
-        Player player = event.getPlayer();
-        ConfigHandler configHandler = new ConfigHandler(player.getUniqueId().toString() + ".yml");
+    public void onLogin(PlayerJoinEvent event) {
+        final Player player = event.getPlayer();
+        ConfigHandler configHandler = new ConfigHandler("userdata/" + player.getUniqueId().toString() + ".yml");
         FileConfiguration configuration = configHandler.getConfig();
-
         if(!configuration.contains("stats")){
             setDefaultStats(configHandler);
         }
         plugin.updatePlayerStats(player, getStats(configuration));
-
+        displayLevel(player);
     }
 
     @EventHandler
@@ -96,6 +96,7 @@ public class PlayerListener implements Listener {
         player.sendMessage(ChatColor.RED + "You have been given " + 3 * levelDifference + " attribute points, speed them with /attributes");
         plugin.setAttributePoints(player, plugin.getAttributePoints(player) + 3);
         plugin.updatePlayerStats(player, event.getStats());
+        displayLevel(player);
     }
 
     private Double getXP(Entity entity){
@@ -135,6 +136,17 @@ public class PlayerListener implements Listener {
         double xp = configuration.getDouble("stats.xp");
 
         return new Stats(stamina, strength, dexterity, agility, level, xp);
+    }
+
+    private void displayLevel(Player player){
+        ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
+        Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
+        Objective objective = scoreboard.registerNewObjective("level", "dummy");
+        objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        objective.setDisplayName(" :Level");
+        Score score = objective.getScore(player);
+        score.setScore(plugin.getPlayerStat(player).getLevel());
+        player.setScoreboard(scoreboard);
     }
 
 }

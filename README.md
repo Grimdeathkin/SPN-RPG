@@ -69,4 +69,6 @@ Plugin requirements
   
   -Custom names for items
   
+  -Player levels display under names
+  
   

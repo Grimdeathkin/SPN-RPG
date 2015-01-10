@@ -89,7 +89,7 @@ public class SpnRpg extends JavaPlugin{
     }
 
     public void updatePlayerStats(Player player, Stats stats){
-        ConfigHandler configHandler = new ConfigHandler(player.getUniqueId().toString() + ".yml");
+        ConfigHandler configHandler = new ConfigHandler("userdata/" + player.getUniqueId().toString() + ".yml");
         FileConfiguration configuration = configHandler.getConfig();
         configuration.set("stats.stamina", stats.getStamina());
         configuration.set("stats.strength", stats.getStrength());
@@ -103,7 +103,7 @@ public class SpnRpg extends JavaPlugin{
     }
 
     public void removePlayerStats(Player player){
-        ConfigHandler configHandler = new ConfigHandler(player.getUniqueId().toString() + ".yml");
+        ConfigHandler configHandler = new ConfigHandler("userdata/" + player.getUniqueId().toString() + ".yml");
         FileConfiguration configuration = configHandler.getConfig();
         Stats stats = getPlayerStat(player);
         configuration.set("stats.stamina", stats.getStamina());
@@ -117,13 +117,13 @@ public class SpnRpg extends JavaPlugin{
     }
 
     public int getAttributePoints(Player player){
-        ConfigHandler configHandler = new ConfigHandler(player.getUniqueId().toString() + ".yml");
+        ConfigHandler configHandler = new ConfigHandler("userdata/" + player.getUniqueId().toString() + ".yml");
         FileConfiguration configuration = configHandler.getConfig();
         return configuration.getInt("attributepoints");
     }
 
     public void setAttributePoints(Player player, int newValue){
-        ConfigHandler configHandler = new ConfigHandler(player.getUniqueId().toString() + ".yml");
+        ConfigHandler configHandler = new ConfigHandler("userdata/" + player.getUniqueId().toString() + ".yml");
         FileConfiguration configuration = configHandler.getConfig();
         configuration.set("attributepoints", newValue);
         configHandler.saveConfig();
@@ -133,9 +133,6 @@ public class SpnRpg extends JavaPlugin{
         return playerStats;
     }
 
-    public void setPlayerStats(HashMap<String, Stats> playerStats) {
-        this.playerStats = playerStats;
-    }
     
     public RandomItemGenerator getRandomItemGenerator(){
         return randomItemGenerator;
